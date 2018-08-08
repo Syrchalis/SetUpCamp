@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+ 
+  <WorldObjectDef>
+    <defName>CaravanCamp</defName>
+    <label>caravan camp</label>
+    <description>A camp.</description>
+    <worldObjectClass>Syrchalis_SetUpCamp.CaravanCamp</worldObjectClass>
+    <texture>World/WorldObjects/Camp</texture>
+    <expandingIcon>true</expandingIcon>
+    <expandingIconTexture>World/WorldObjects/Expanding/Camp</expandingIconTexture>
+    <expandingIconPriority>8</expandingIconPriority>
+	<comps>
+      <li Class="WorldObjectCompProperties_FormCaravan" />
+    </comps>
+  </WorldObjectDef>
+  
+  
+</Defs>

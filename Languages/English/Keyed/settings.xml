@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <SetUpCamp>Set up camp</SetUpCamp>
+  <SetUpCampDesc>Set up a camp, enabling you to forage, mine and hunt as well as reorganize your caravan.</SetUpCampDesc>
+  <SetUpCampFormedCamp>The caravan successfully set up a camp.</SetUpCampFormedCamp>
+  <SetUpCampSettingsCategoryLabel>Set Up Camp</SetUpCampSettingsCategoryLabel>
+  <SetUpCampSettingMapSize>Camp map size range</SetUpCampSettingMapSize>
+  <SetUpCampSettingMinCampSize>Minimum size for camps</SetUpCampSettingMinCampSize>
+  <SetUpCampSettingMaxCampSize>Maximum size for camps</SetUpCampSettingMaxCampSize>
+  <SetUpCampSettingsPermanentCamps>Enable permanent camps (disabling this will permanently delete all empty camps currently on the map)</SetUpCampSettingsPermanentCamps>
+  <SetUpCampDestroyCamp>Abandon camp</SetUpCampDestroyCamp>
+  <SetUpCampDestroyCampDesc>Abandons this camp permanently.</SetUpCampDestroyCampDesc>
+  <SetUpCampAbandonDialogue>Are you sure you wish to permanently and irreversibly destroy this camp?</SetUpCampAbandonDialogue>
+  <SetUpCampAbandoned>Camp abandoned.</SetUpCampAbandoned>
+  <SetUpCampStillInUse>There are still colonists in the camp. You must form a caravan before abandoning the camp.</SetUpCampStillInUse>
+  
+
+</LanguageData>
