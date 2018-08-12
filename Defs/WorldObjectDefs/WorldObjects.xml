@@ -14,7 +14,6 @@
 	<comps>
       <li Class="WorldObjectCompProperties_FormCaravan" />
 	  <li Class="WorldObjectCompProperties_TimedForcedExit" />
-      <li Class="WorldObjectCompProperties_EnterCooldown" />
     </comps>
     <IncidentTargetTags>
     </IncidentTargetTags>
