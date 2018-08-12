@@ -4,5 +4,8 @@
   <CaravanCamp.label>キャラバン隊 キャンプ</CaravanCamp.label>
   <CaravanCamp.description>キャンプです。</CaravanCamp.description>
 
+  <AbandonedCamp.label>放棄されたキャンプ</AbandonedCamp.label>
+  <AbandonedCamp.description>放棄されたキャンプ跡地です。</AbandonedCamp.description>
+
 
 </LanguageData>
