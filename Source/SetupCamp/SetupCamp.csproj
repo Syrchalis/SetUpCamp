@@ -50,9 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CaravanCamp.cs" />
+    <Compile Include="DefOfs.cs" />
     <Compile Include="ModSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settingshelper.cs" />
+    <Compile Include="SetUpCampCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

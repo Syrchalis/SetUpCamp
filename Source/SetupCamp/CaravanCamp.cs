@@ -14,6 +14,35 @@ namespace Syrchalis_SetUpCamp
             base.ExposeData();
         }
 
+        public override void Tick()
+        {
+            base.Tick();
+            if (HasMap)
+            {
+                CheckStartForceExitAndRemoveMapCountdown();
+            }
+        }
+
+        private bool startedCountdown;
+        public float forceExitAndRemoveMapCountdownDurationDays = SetUpCampSettings.mapTimerDays;
+        private void CheckStartForceExitAndRemoveMapCountdown()
+        {
+            if (!startedCountdown && SetUpCampSettings.mapTimerDays != SetUpCampSettings.mapTimerDaysmin && SetUpCampSettings.mapTimerDays != SetUpCampSettings.mapTimerDaysmax)
+            {
+                if (!GenHostility.AnyHostileActiveThreatToPlayer(Map))
+                {
+                    startedCountdown = true;
+                    int num = Mathf.RoundToInt(forceExitAndRemoveMapCountdownDurationDays * 60000f);
+                    string text = "MessageSiteCountdownBecauseNoEnemiesInitially".Translate(new object[]
+                    {
+                        TimedForcedExit.GetForceExitAndRemoveMapCountdownTimeLeftString(num)
+                    });
+                    Messages.Message(text, this, MessageTypeDefOf.PositiveEvent, true);
+                    GetComponent<TimedForcedExit>().StartForceExitAndRemoveMapCountdown(num);
+                }
+            }
+        }
+        public bool shouldBeDeleted = false;
         public override bool ShouldRemoveMapNow(out bool alsoRemoveWorldObject)
         {
             bool result;
@@ -30,6 +59,10 @@ namespace Syrchalis_SetUpCamp
                 {
                     alsoRemoveWorldObject = true;
                     result = true;
+                    if (SetUpCampSettings.timeout != SetUpCampSettings.timeoutmin && SetUpCampSettings.timeout != SetUpCampSettings.timeoutmax)
+                    {
+                        AddAbandonedCamp(this);
+                    }     
                 }
             }
             else
@@ -38,6 +71,15 @@ namespace Syrchalis_SetUpCamp
                 alsoRemoveWorldObject = false;
             }
             return result;
+        }
+
+        private static void AddAbandonedCamp(CaravanCamp Camp)
+        {
+            WorldObject worldObject = WorldObjectMaker.MakeWorldObject(SetUpCampDefOf.AbandonedCamp);
+            worldObject.GetComponent<TimeoutComp>().StartTimeout(SetUpCampSettings.timeout * 60000);
+            worldObject.Tile = Camp.Tile;
+            worldObject.SetFaction(Camp.Faction);
+            Find.WorldObjects.Add(worldObject);
         }
 
         public override IEnumerable<Gizmo> GetGizmos()
@@ -80,7 +122,5 @@ namespace Syrchalis_SetUpCamp
             }
             yield break;
         }
-
-        public bool shouldBeDeleted = false;
     }
 }

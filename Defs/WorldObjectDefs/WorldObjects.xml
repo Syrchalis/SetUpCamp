@@ -13,9 +13,21 @@
     <expandingIconPriority>8</expandingIconPriority>
 	<comps>
       <li Class="WorldObjectCompProperties_FormCaravan" />
+	  <li Class="WorldObjectCompProperties_TimedForcedExit" />
+      <li Class="WorldObjectCompProperties_EnterCooldown" />
     </comps>
     <IncidentTargetTags>
     </IncidentTargetTags>
+  </WorldObjectDef>
+  
+  <WorldObjectDef>
+    <defName>AbandonedCamp</defName>
+    <label>abandoned camp</label>
+    <description>An abandoned camp.</description>
+    <texture>World/WorldObjects/Camp</texture>
+	<comps>
+      <li Class="WorldObjectCompProperties_Timeout" />
+    </comps>
   </WorldObjectDef>
   
   
