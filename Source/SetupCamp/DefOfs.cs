@@ -21,5 +21,7 @@ namespace Syrchalis_SetUpCamp
         }
         public static WorldObjectDef CaravanCamp;
         public static WorldObjectDef AbandonedCamp;
+        public static MapGeneratorDef Syr_SetUpCamp;
+        public static MapGeneratorDef Syr_SetUpCampNR;
     }
 }

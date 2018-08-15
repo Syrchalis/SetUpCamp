@@ -59,6 +59,7 @@ namespace Syrchalis_SetUpCamp
                     listing_Standard.Label("SetUpCampSettingsTimeout".Translate() + ": " + SetUpCampSettings.timeout + " " + "Days".Translate(), -1, "SetUpCampSettingsTimeoutTooltip".Translate());
                 }
                 SetUpCampSettings.timeout = (int)listing_Standard.Slider(SetUpCampSettings.timeout, SetUpCampSettings.timeoutmin, SetUpCampSettings.timeoutmax);
+                listing_Standard.AddLabeledCheckbox("SetUpCampSettingsCustomMapGenDef".Translate() + ": ", ref SetUpCampSettings.customMapGenDef);
                 listing_Standard.AddLabeledCheckbox("SetUpCampSettingsPermanentCamps".Translate() + ": ", ref SetUpCampSettings.permanentCamps);
                 listing_Standard.AddLabeledCheckbox("SetUpCampSettingsHomeEvents".Translate() + ": ", ref SetUpCampSettings.homeEvents);
                 listing_Standard.AddLabeledCheckbox("SetUpCampSettingsCaravanEvents".Translate() + ": ", ref SetUpCampSettings.caravanEvents);

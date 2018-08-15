@@ -12,6 +12,7 @@
   <SetUpCampSettingsTimeoutTooltip>Days until abandoned camps vanish (15-120)</SetUpCampSettingsTimeoutTooltip>
   <SetUpCampSettingMinCampSize>Minimum size for camps</SetUpCampSettingMinCampSize>
   <SetUpCampSettingMaxCampSize>Maximum size for camps</SetUpCampSettingMaxCampSize>
+  <SetUpCampSettingsCustomMapGenDef>Enable resources</SetUpCampSettingsCustomMapGenDef>
   <SetUpCampSettingsPermanentCamps>Enable permanent camps (disabling this will permanently delete all empty camps currently on the map)</SetUpCampSettingsPermanentCamps>
   <SetUpCampSettingsHomeEvents>Enable "normal map" events on camps</SetUpCampSettingsHomeEvents>
   <SetUpCampSettingsCaravanEvents>Enable "caravan" events on camps</SetUpCampSettingsCaravanEvents>

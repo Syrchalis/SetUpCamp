@@ -22,6 +22,7 @@ namespace Syrchalis_SetUpCamp
         public static int timeout = 60;
         public static int timeoutmin = 0;
         public static int timeoutmax = 181;
+        public static bool customMapGenDef = true;
         public static bool permanentCamps = false;
         public static bool homeEvents = false;
         public static bool caravanEvents = false;
@@ -33,6 +34,7 @@ namespace Syrchalis_SetUpCamp
             Scribe_Values.Look<IntRange>(ref allowedSizeRange, "allowedSizeRange", new IntRange(75, 125), true);
             Scribe_Values.Look<int>(ref mapTimerDays, "mapTimerDays", 7, true);
             Scribe_Values.Look<int>(ref timeout, "Timeout", 60, true);
+            Scribe_Values.Look<bool>(ref customMapGenDef, "customMapGenDef", true, true);
             Scribe_Values.Look<bool>(ref permanentCamps, "permanentCamps", false, true);
             Scribe_Values.Look<bool>(ref homeEvents, "homeEvents", false, true);
             Scribe_Values.Look<bool>(ref caravanEvents, "caravanEvents", false, true);

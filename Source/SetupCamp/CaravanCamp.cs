@@ -23,6 +23,8 @@ namespace Syrchalis_SetUpCamp
             }
         }
 
+        public override MapGeneratorDef MapGeneratorDef => (SetUpCampSettings.customMapGenDef) ? SetUpCampDefOf.Syr_SetUpCamp : SetUpCampDefOf.Syr_SetUpCampNR;
+
         private bool startedCountdown;
         public float forceExitAndRemoveMapCountdownDurationDays = SetUpCampSettings.mapTimerDays;
         private void CheckStartForceExitAndRemoveMapCountdown()
