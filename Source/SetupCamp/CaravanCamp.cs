@@ -12,6 +12,7 @@ namespace Syrchalis_SetUpCamp
         public override void ExposeData()
         {
             base.ExposeData();
+            Scribe_Values.Look<bool>(ref this.startedCountdown, "startedCountdown", false, false);
         }
 
         public override void Tick()

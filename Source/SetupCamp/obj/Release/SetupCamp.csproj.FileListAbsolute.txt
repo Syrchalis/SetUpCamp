@@ -3,3 +3,8 @@ C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\SetUpCamp\Source\Set
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\SetUpCamp\Source\SetupCamp\obj\Release\SetupCamp.csproj.CoreCompileInputs.cache
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\SetUpCamp\Source\SetupCamp\obj\Release\SetupCamp.csproj.CopyComplete
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\SetUpCamp\Source\SetupCamp\obj\Release\SetUpCamp.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\SYR_SetUpCamp\Assemblies\SetUpCamp.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\SYR_SetUpCamp\Source\SetupCamp\obj\Release\SetupCamp.csprojAssemblyReference.cache
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\SYR_SetUpCamp\Source\SetupCamp\obj\Release\SetupCamp.csproj.CoreCompileInputs.cache
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\SYR_SetUpCamp\Source\SetupCamp\obj\Release\SetupCamp.csproj.CopyComplete
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\SYR_SetUpCamp\Source\SetupCamp\obj\Release\SetUpCamp.dll
