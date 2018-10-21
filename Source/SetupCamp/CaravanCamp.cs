@@ -36,10 +36,7 @@ namespace Syrchalis_SetUpCamp
                 {
                     startedCountdown = true;
                     int num = Mathf.RoundToInt(forceExitAndRemoveMapCountdownDurationDays * 60000f);
-                    string text = "MessageSiteCountdownBecauseNoEnemiesInitially".Translate(new object[]
-                    {
-                        TimedForcedExit.GetForceExitAndRemoveMapCountdownTimeLeftString(num)
-                    });
+                    string text = "MessageSiteCountdownBecauseNoEnemiesInitially".Translate(TimedForcedExit.GetForceExitAndRemoveMapCountdownTimeLeftString(num));
                     Messages.Message(text, this, MessageTypeDefOf.PositiveEvent, true);
                     GetComponent<TimedForcedExit>().StartForceExitAndRemoveMapCountdown(num);
                 }
