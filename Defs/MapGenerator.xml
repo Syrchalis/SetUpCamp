@@ -5,7 +5,6 @@
     <defName>Syr_SetUpCamp</defName>
     <genSteps>
       <li>RocksFromGrid</li>
-      <li>ScatterDeepResourceLumps</li>
     </genSteps>
   </MapGeneratorDef>
   
