@@ -26,7 +26,7 @@ namespace Syrchalis_SetUpCamp
         public static bool permanentCamps = false;
         public static bool homeEvents = false;
         public static bool caravanEvents = false;
-        public static IntRange allowedSizeRange = new IntRange(50, 300);
+        public static IntRange allowedSizeRange = new IntRange(75, 125);
 
         public override void ExposeData()
         {
