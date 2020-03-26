@@ -1,8 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-  <CaravanCamp.label>キャラバン隊 キャンプ</CaravanCamp.label>
-  <CaravanCamp.description>キャンプです。</CaravanCamp.description>
+  <CaravanCamp.label>caravan camp</CaravanCamp.label>
+  <CaravanCamp.description>A camp.</CaravanCamp.description>
+
+  <AbandonedCamp.label>abandoned camp</AbandonedCamp.label>
+  <AbandonedCamp.description>An abandoned camp.</AbandonedCamp.description>
 
 
 </LanguageData>
