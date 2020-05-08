@@ -11,7 +11,7 @@ namespace Syrchalis_SetUpCamp
 {
     public class CaravanCamp : MapParent
     {
-        private bool startedCountdown;
+        public bool startedCountdown;
 
         public override MapGeneratorDef MapGeneratorDef => SetUpCampSettings.customMapGenDef ? SetUpCampDefOf.Syr_SetUpCamp : SetUpCampDefOf.Syr_SetUpCampNR;
 
@@ -114,9 +114,12 @@ namespace Syrchalis_SetUpCamp
 
         public void ChangeTimer(int delta)
         {
-            TimedForcedExit forceExitComp = GetComponent<TimedForcedExit>();
-            int timeLeftTicks = (int)AccessTools.Field(typeof(TimedForcedExit), "ticksLeftToForceExitAndRemoveMap").GetValue(forceExitComp);
-            forceExitComp.StartForceExitAndRemoveMapCountdown(timeLeftTicks + delta);
+            if (startedCountdown)
+            {
+                TimedForcedExit forceExitComp = GetComponent<TimedForcedExit>();
+                int timeLeftTicks = (int)AccessTools.Field(typeof(TimedForcedExit), "ticksLeftToForceExitAndRemoveMap").GetValue(forceExitComp);
+                forceExitComp.StartForceExitAndRemoveMapCountdown(timeLeftTicks + delta);
+            }
         }
     }
 }

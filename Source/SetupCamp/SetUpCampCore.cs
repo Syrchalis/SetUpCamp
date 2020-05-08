@@ -67,12 +67,26 @@ namespace Syrchalis_SetUpCamp
         public override void WriteSettings()
         {
             base.WriteSettings();
-            int delta = (SetUpCampSettings.mapTimerDays - cachedMapTimerDays) * 60000;
-            if (Current.ProgramState == ProgramState.Playing && delta > 0)
+            if (SetUpCampSettings.mapTimerDays > 0)
             {
-                foreach (CaravanCamp camp in Find.WorldObjects.AllWorldObjects.Where(wo => wo.def == SetUpCampDefOf.CaravanCamp))
+                int delta = (SetUpCampSettings.mapTimerDays - cachedMapTimerDays) * 60000;
+                if (Current.ProgramState == ProgramState.Playing && delta > 0)
                 {
-                    camp.ChangeTimer(delta);
+                    foreach (CaravanCamp camp in Find.WorldObjects.AllWorldObjects.Where(wo => wo.def == SetUpCampDefOf.CaravanCamp))
+                    {
+                        camp.ChangeTimer(delta);
+                    }
+                }
+            }
+            else
+            {
+                if (Current.ProgramState == ProgramState.Playing)
+                {
+                    foreach (CaravanCamp camp in Find.WorldObjects.AllWorldObjects.Where(wo => wo.def == SetUpCampDefOf.CaravanCamp))
+                    {
+                        camp.GetComponent<TimedForcedExit>().ResetForceExitAndRemoveMapCountdown();
+                        camp.startedCountdown = false;
+                    }
                 }
             }
             cachedMapTimerDays = SetUpCampSettings.mapTimerDays;

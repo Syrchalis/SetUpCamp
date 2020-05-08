@@ -5,17 +5,17 @@
   <SetUpCampDesc>Set up a camp, enabling you to forage, mine and hunt as well as reorganize your caravan.</SetUpCampDesc>
   <SetUpCampFormedCamp>The caravan successfully set up a camp.</SetUpCampFormedCamp>
   <SetUpCampSettingsCategoryLabel>Set Up Camp</SetUpCampSettingsCategoryLabel>
-  <SetUpCampSettingMapSize>Camp map size range (Default: 75-125)</SetUpCampSettingMapSize>
-  <SetUpCampSettingsMapTimerDays>Camp leaving timer (Default: 5)</SetUpCampSettingsMapTimerDays>
-  <SetUpCampSettingsMapTimerDaysTooltip>Days until caravan is forced to leave camp</SetUpCampSettingsMapTimerDaysTooltip>
-  <SetUpCampSettingsTimeout>Abandoned camp vanish timer (Default: 60)</SetUpCampSettingsTimeout>
-  <SetUpCampSettingsTimeoutTooltip>Days until abandoned camps vanish (15-120)</SetUpCampSettingsTimeoutTooltip>
+  <SetUpCampSettingMapSize>Map size range (default: 75 - 125)</SetUpCampSettingMapSize>
+  <SetUpCampSettingsMapTimerDays>Leaving timer (default: 5)</SetUpCampSettingsMapTimerDays>
+  <SetUpCampSettingsMapTimerDaysTooltip>Days until the caravan is forced to leave the map</SetUpCampSettingsMapTimerDaysTooltip>
+  <SetUpCampSettingsTimeout>Abandoned camp duration (default: 60)</SetUpCampSettingsTimeout>
+  <SetUpCampSettingsTimeoutTooltip>Days until abandoned camps disappear and the tile can be used again</SetUpCampSettingsTimeoutTooltip>
   <SetUpCampSettingMinCampSize>Minimum size for camps</SetUpCampSettingMinCampSize>
   <SetUpCampSettingMaxCampSize>Maximum size for camps</SetUpCampSettingMaxCampSize>
-  <SetUpCampSettingsCustomMapGenDef>Enable resources</SetUpCampSettingsCustomMapGenDef>
-  <SetUpCampSettingsPermanentCamps>Enable permanent camps (disabling this will permanently delete all empty camps currently on the map)</SetUpCampSettingsPermanentCamps>
-  <SetUpCampSettingsHomeEvents>Enable "normal map" events on camps</SetUpCampSettingsHomeEvents>
-  <SetUpCampSettingsCaravanEvents>Enable "caravan" events on camps</SetUpCampSettingsCaravanEvents>
+  <SetUpCampSettingsCustomMapGenDef>Enable resources (default: true)</SetUpCampSettingsCustomMapGenDef>
+  <SetUpCampSettingsPermanentCamps>Enable permanent camps (default: false, disabling will remove empty camps!)</SetUpCampSettingsPermanentCamps>
+  <SetUpCampSettingsHomeEvents>Enable "normal map" events on camps (default: false)</SetUpCampSettingsHomeEvents>
+  <SetUpCampSettingsCaravanEvents>Enable "caravan" events on camps (default: false)</SetUpCampSettingsCaravanEvents>
   <SetUpCampDestroyCamp>Abandon camp</SetUpCampDestroyCamp>
   <SetUpCampDestroyCampDesc>Abandons this camp permanently.</SetUpCampDestroyCampDesc>
   <SetUpCampAbandonDialogue>Are you sure you wish to permanently and irreversibly destroy this camp?</SetUpCampAbandonDialogue>
