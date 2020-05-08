@@ -64,10 +64,10 @@
     <Compile Include="CaravanCamp.cs" />
     <Compile Include="DefOfs.cs" />
     <Compile Include="HarmonyPatches.cs" />
-    <Compile Include="ModSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settingshelper.cs" />
     <Compile Include="SetUpCampCore.cs" />
+    <Compile Include="SetUpCamp_Utility.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HarmonyLib;
+using System;
 using System.Data;
 using System.Collections.Generic;
 using RimWorld;
@@ -10,6 +11,10 @@ namespace Syrchalis_SetUpCamp
 {
     public class CaravanCamp : MapParent
     {
+        private bool startedCountdown;
+
+        public override MapGeneratorDef MapGeneratorDef => SetUpCampSettings.customMapGenDef ? SetUpCampDefOf.Syr_SetUpCamp : SetUpCampDefOf.Syr_SetUpCampNR;
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -25,74 +30,28 @@ namespace Syrchalis_SetUpCamp
             }
         }
 
-        public override MapGeneratorDef MapGeneratorDef => (SetUpCampSettings.customMapGenDef) ? SetUpCampDefOf.Syr_SetUpCamp : SetUpCampDefOf.Syr_SetUpCampNR;
-
-        private bool startedCountdown;
-        public float forceExitAndRemoveMapCountdownDurationDays = SetUpCampSettings.mapTimerDays;
-        private void CheckStartForceExitAndRemoveMapCountdown()
-        {
-            if (!startedCountdown && SetUpCampSettings.mapTimerDays != SetUpCampSettings.mapTimerDaysmin && SetUpCampSettings.mapTimerDays != SetUpCampSettings.mapTimerDaysmax)
-            {
-                if (!GenHostility.AnyHostileActiveThreatToPlayer(Map))
-                {
-                    startedCountdown = true;
-                    int num = Mathf.RoundToInt(forceExitAndRemoveMapCountdownDurationDays * 60000f);
-                    string text = "MessageSiteCountdownBecauseNoEnemiesInitially".Translate(TimedForcedExit.GetForceExitAndRemoveMapCountdownTimeLeftString(num));
-                    Messages.Message(text, this, MessageTypeDefOf.PositiveEvent, true);
-                    GetComponent<TimedForcedExit>().StartForceExitAndRemoveMapCountdown(num);
-                }
-            }
-        }
-        public bool shouldBeDeleted = false;
         public override bool ShouldRemoveMapNow(out bool alsoRemoveWorldObject)
         {
-            bool result;
-            bool pawnblock = Map.mapPawns.AnyPawnBlockingMapRemoval;
-            if (!pawnblock)
+            if (!Map.mapPawns.AnyPawnBlockingMapRemoval && !SetUpCampSettings.permanentCamps)
             {
-                bool permCamps = SetUpCampSettings.permanentCamps && !shouldBeDeleted;
-                if (permCamps)
+                if (SetUpCampSettings.timeout != SetUpCampSettings.timeoutmin) //this would mean the setting is off
                 {
-                    alsoRemoveWorldObject = false;
-                    result = false;
+                    AddAbandonedCamp(this);
                 }
-                else
-                {
-                    alsoRemoveWorldObject = true;
-                    result = true;
-                    if (SetUpCampSettings.timeout != SetUpCampSettings.timeoutmin && SetUpCampSettings.timeout != SetUpCampSettings.timeoutmax)
-                    {
-                        AddAbandonedCamp(this);
-                    }     
-                }
+                alsoRemoveWorldObject = true;
+                return true;
             }
-            else
-            {
-                result = false;
-                alsoRemoveWorldObject = false;
-            }
-            return result;
-        }
-
-        private static void AddAbandonedCamp(CaravanCamp Camp)
-        {
-            WorldObject worldObject = WorldObjectMaker.MakeWorldObject(SetUpCampDefOf.AbandonedCamp);
-            worldObject.GetComponent<TimeoutComp>().StartTimeout(SetUpCampSettings.timeout * 60000);
-            worldObject.Tile = Camp.Tile;
-            worldObject.SetFaction(Camp.Faction);
-            Find.WorldObjects.Add(worldObject);
+            alsoRemoveWorldObject = false;
+            return false;
         }
 
         public override IEnumerable<Gizmo> GetGizmos()
         {
-            SetUpCampSettings settings = LoadedModManager.GetMod<SetUpCamp>().GetSettings<SetUpCampSettings>();
             foreach (Gizmo g in base.GetGizmos())
             {
                 yield return g;
-                g.disabledReason = null;
             }
-            bool showDestroyButton = HasMap && SetUpCampSettings.permanentCamps;
-            if (showDestroyButton)
+            if (HasMap && SetUpCampSettings.permanentCamps)
             {
                 yield return new Command_Action
                 {
@@ -101,27 +60,63 @@ namespace Syrchalis_SetUpCamp
                     icon = ContentFinder<Texture2D>.Get("UI/Commands/DeleteCamp", true),
                     action = delegate ()
                     {
-                        bool pawnblock = Map.mapPawns.AnyPawnBlockingMapRemoval;
-                        if (!pawnblock)
+                        if (Map.mapPawns.AnyPawnBlockingMapRemoval)
+                        {
+                            Messages.Message("SetUpCampStillInUse".Translate(), MessageTypeDefOf.RejectInput);
+                        }
+                        else
                         {
                             Find.WindowStack.Add(new Dialog_MessageBox("SetUpCampAbandonDialogue".Translate(),
                                 "AcceptButton".Translate(), delegate ()
                                 {
                                     Messages.Message("SetUpCampAbandoned".Translate(), MessageTypeDefOf.TaskCompletion);
-                                    shouldBeDeleted = true;
-                                    Tick();
+                                    CheckRemoveMapNow();
                                 },
                                 "CancelButton".Translate(), null, null, false, null, null));
-                        }
-                        else
-                        {
-                            Messages.Message("SetUpCampStillInUse".Translate(), MessageTypeDefOf.RejectInput);
-                            shouldBeDeleted = false;
                         }
                     }
                 };
             }
-            yield break;
+        }
+        
+        private void CheckStartForceExitAndRemoveMapCountdown()
+        {
+            if (SetUpCampSettings.mapTimerDays != SetUpCampSettings.mapTimerDaysmin)
+            {
+                if (startedCountdown)
+                {
+                    if (GenHostility.AnyHostileActiveThreatToPlayer(Map, false))
+                    {
+                        startedCountdown = false;
+                        GetComponent<TimedForcedExit>().ResetForceExitAndRemoveMapCountdown();
+                    }
+                }
+                else
+                {
+                    if (!GenHostility.AnyHostileActiveThreatToPlayer(Map))
+                    {
+                        startedCountdown = true;
+                        int ticksTillLeaving = Mathf.RoundToInt(SetUpCampSettings.mapTimerDays * 60000f);
+                        Messages.Message("MessageSiteCountdownBecauseNoEnemiesInitially".Translate(TimedForcedExit.GetForceExitAndRemoveMapCountdownTimeLeftString(ticksTillLeaving)), this, MessageTypeDefOf.PositiveEvent, true);
+                        GetComponent<TimedForcedExit>().StartForceExitAndRemoveMapCountdown(ticksTillLeaving);
+                    }
+                }
+            }
+        }
+        public void AddAbandonedCamp(CaravanCamp Camp)
+        {
+            WorldObject worldObject = WorldObjectMaker.MakeWorldObject(SetUpCampDefOf.AbandonedCamp);
+            worldObject.GetComponent<TimeoutComp>().StartTimeout(SetUpCampSettings.timeout * 60000);
+            worldObject.Tile = Camp.Tile;
+            worldObject.SetFaction(Camp.Faction);
+            Find.WorldObjects.Add(worldObject);
+        }
+
+        public void ChangeTimer(int delta)
+        {
+            TimedForcedExit forceExitComp = GetComponent<TimedForcedExit>();
+            int timeLeftTicks = (int)AccessTools.Field(typeof(TimedForcedExit), "ticksLeftToForceExitAndRemoveMap").GetValue(forceExitComp);
+            forceExitComp.StartForceExitAndRemoveMapCountdown(timeLeftTicks + delta);
         }
     }
 }
