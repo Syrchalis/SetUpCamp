@@ -63,7 +63,7 @@ namespace Syrchalis_SetUpCamp
             {
                 Map map = camp.Map;
                 Thing t = caravan.PawnsListForReading[0];
-                CaravanEnterMapUtility.Enter(caravan, map, CaravanEnterMode.Center, CaravanDropInventoryMode.DropInstantly, false, (IntVec3 x) => x.GetRoom(map, RegionType.Set_Passable).CellCount >= 600);
+                CaravanEnterMapUtility.Enter(caravan, map, CaravanEnterMode.Center, CaravanDropInventoryMode.DoNotDrop, false, (IntVec3 x) => x.GetRoom(map, RegionType.Set_Passable).CellCount >= 600);
                 CameraJumper.TryJump(t);
                 Find.TickManager.CurTimeSpeed = 0;
                 Messages.Message("SetUpCampFormedCamp".Translate(), MessageTypeDefOf.PositiveEvent);
