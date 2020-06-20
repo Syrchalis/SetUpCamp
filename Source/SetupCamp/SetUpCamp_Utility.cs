@@ -18,7 +18,8 @@ namespace Syrchalis_SetUpCamp
     {
         public static readonly Texture2D SetUpCampCommandTex = ContentFinder<Texture2D>.Get("UI/Commands/SetUpCamp", true);
         private static StringBuilder tmpSettleFailReason = new StringBuilder();
-
+        public static string randomSeed;
+        
         public static Command_Action SetUpCampCommand(Caravan caravan)
         {
             Command_Action command_Action = new Command_Action
@@ -52,7 +53,7 @@ namespace Syrchalis_SetUpCamp
                 Log.Error("Cannot camp with non-player faction.", false);
                 return;
             }
-            string randomSeed = Find.TickManager.TicksGame.ToString();
+            randomSeed = Find.TickManager.TicksGame.ToString();
             int CampSize = Rand.Range(SetUpCampSettings.allowedSizeRange.min, SetUpCampSettings.allowedSizeRange.max);
             CaravanCamp camp = NewCaravanCamp(caravan.Tile, faction);
             LongEventHandler.QueueLongEvent(delegate ()
