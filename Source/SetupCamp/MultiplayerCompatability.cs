@@ -18,7 +18,6 @@ namespace Syrchalis_SetUpCamp
                 if (!MP.enabled) return;
 
                 MP.RegisterSyncMethod(typeof(SetUpCamp_Utility), nameof(SetUpCamp_Utility.Camp));
-                MP.RegisterSyncField(typeof(SetUpCamp_Utility), nameof(SetUpCamp_Utility.randomSeed));
 
             }
         }
