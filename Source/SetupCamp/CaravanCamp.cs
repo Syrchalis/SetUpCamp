@@ -60,20 +60,13 @@ namespace Syrchalis_SetUpCamp
                     icon = ContentFinder<Texture2D>.Get("UI/Commands/DeleteCamp", true),
                     action = delegate ()
                     {
-                        if (Map.mapPawns.AnyPawnBlockingMapRemoval)
-                        {
-                            Messages.Message("SetUpCampStillInUse".Translate(), MessageTypeDefOf.RejectInput);
-                        }
-                        else
-                        {
-                            Find.WindowStack.Add(new Dialog_MessageBox("SetUpCampAbandonDialogue".Translate(),
-                                "AcceptButton".Translate(), delegate ()
-                                {
-                                    Messages.Message("SetUpCampAbandoned".Translate(), MessageTypeDefOf.TaskCompletion);
-                                    CheckRemoveMapNow();
-                                },
-                                "CancelButton".Translate(), null, null, false, null, null));
-                        }
+                        Find.WindowStack.Add(new Dialog_MessageBox("SetUpCampAbandonDialogue".Translate(),
+                            "AcceptButton".Translate(), delegate ()
+                            {
+                                Messages.Message("SetUpCampAbandoned".Translate(), MessageTypeDefOf.TaskCompletion);
+                                TimedForcedExit.ForceReform(this);
+                            },
+                            "CancelButton".Translate(), null, null, false, null, null));
                     }
                 };
             }
