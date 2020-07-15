@@ -65,6 +65,10 @@ namespace Syrchalis_SetUpCamp
                             {
                                 Messages.Message("SetUpCampAbandoned".Translate(), MessageTypeDefOf.TaskCompletion);
                                 TimedForcedExit.ForceReform(this);
+                                if (SetUpCampSettings.timeout != SetUpCampSettings.timeoutmin) //this would mean the setting is off
+                                {
+                                    AddAbandonedCamp(this);
+                                }
                             },
                             "CancelButton".Translate(), null, null, false, null, null));
                     }
