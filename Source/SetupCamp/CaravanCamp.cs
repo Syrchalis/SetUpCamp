@@ -21,15 +21,6 @@ namespace Syrchalis_SetUpCamp
             Scribe_Values.Look<bool>(ref this.startedCountdown, "startedCountdown", false, false);
         }
 
-        public override void Tick()
-        {
-            base.Tick();
-            if (HasMap)
-            {
-                CheckStartForceExitAndRemoveMapCountdown();
-            }
-        }
-
         public override bool ShouldRemoveMapNow(out bool alsoRemoveWorldObject)
         {
             if (!Map.mapPawns.AnyPawnBlockingMapRemoval && !SetUpCampSettings.permanentCamps)
@@ -64,7 +55,7 @@ namespace Syrchalis_SetUpCamp
                             "AcceptButton".Translate(), delegate ()
                             {
                                 Messages.Message("SetUpCampAbandoned".Translate(), MessageTypeDefOf.TaskCompletion);
-                                TimedForcedExit.ForceReform(this);
+                                
                                 if (SetUpCampSettings.timeout != SetUpCampSettings.timeoutmin) //this would mean the setting is off
                                 {
                                     AddAbandonedCamp(this);
@@ -76,30 +67,6 @@ namespace Syrchalis_SetUpCamp
             }
         }
         
-        private void CheckStartForceExitAndRemoveMapCountdown()
-        {
-            if (SetUpCampSettings.mapTimerDays != SetUpCampSettings.mapTimerDaysmin)
-            {
-                if (startedCountdown)
-                {
-                    if (GenHostility.AnyHostileActiveThreatToPlayer(Map, false))
-                    {
-                        startedCountdown = false;
-                        GetComponent<TimedForcedExit>().ResetForceExitAndRemoveMapCountdown();
-                    }
-                }
-                else
-                {
-                    if (!GenHostility.AnyHostileActiveThreatToPlayer(Map))
-                    {
-                        startedCountdown = true;
-                        int ticksTillLeaving = Mathf.RoundToInt(SetUpCampSettings.mapTimerDays * 60000f);
-                        Messages.Message("MessageSiteCountdownBecauseNoEnemiesInitially".Translate(TimedForcedExit.GetForceExitAndRemoveMapCountdownTimeLeftString(ticksTillLeaving)), this, MessageTypeDefOf.PositiveEvent, true);
-                        GetComponent<TimedForcedExit>().StartForceExitAndRemoveMapCountdown(ticksTillLeaving);
-                    }
-                }
-            }
-        }
         public void AddAbandonedCamp(CaravanCamp Camp)
         {
             WorldObject worldObject = WorldObjectMaker.MakeWorldObject(SetUpCampDefOf.AbandonedCamp);
@@ -109,14 +76,5 @@ namespace Syrchalis_SetUpCamp
             Find.WorldObjects.Add(worldObject);
         }
 
-        public void ChangeTimer(int delta)
-        {
-            if (startedCountdown)
-            {
-                TimedForcedExit forceExitComp = GetComponent<TimedForcedExit>();
-                int timeLeftTicks = (int)AccessTools.Field(typeof(TimedForcedExit), "ticksLeftToForceExitAndRemoveMap").GetValue(forceExitComp);
-                forceExitComp.StartForceExitAndRemoveMapCountdown(timeLeftTicks + delta);
-            }
-        }
     }
 }
