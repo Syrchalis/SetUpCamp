@@ -6,6 +6,7 @@ using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
 using Verse;
+using System.Linq;
 
 namespace Syrchalis_SetUpCamp
 {
@@ -55,7 +56,7 @@ namespace Syrchalis_SetUpCamp
                             "AcceptButton".Translate(), delegate ()
                             {
                                 Messages.Message("SetUpCampAbandoned".Translate(), MessageTypeDefOf.TaskCompletion);
-                                
+                                ForceReform(this);
                                 if (SetUpCampSettings.timeout != SetUpCampSettings.timeoutmin) //this would mean the setting is off
                                 {
                                     AddAbandonedCamp(this);
@@ -66,7 +67,34 @@ namespace Syrchalis_SetUpCamp
                 };
             }
         }
-        
+
+        private static void ForceReform(MapParent mapParent)
+        {
+
+            if (Dialog_FormCaravan.AllSendablePawns(mapParent.Map, reform: true).Any((Pawn x) => x.IsColonist))
+            {
+                Messages.Message("MessageYouHaveToReformCaravanNow".Translate(), new GlobalTargetInfo(mapParent.Tile), MessageTypeDefOf.NeutralEvent);
+                Current.Game.CurrentMap = mapParent.Map;
+                Dialog_FormCaravan window = new Dialog_FormCaravan(mapParent.Map, reform: true, delegate
+                {
+                    if (mapParent.HasMap)
+                    {
+                        mapParent.Destroy();
+                    }
+                }, mapAboutToBeRemoved: true);
+                Find.WindowStack.Add(window);
+                return;
+            }
+            List<Pawn> tmpPawns = new List<Pawn>();
+            tmpPawns.AddRange(mapParent.Map.mapPawns.AllPawns.Where((Pawn x) => x.Faction == Faction.OfPlayer || x.HostFaction == Faction.OfPlayer));
+            if (tmpPawns.Any((Pawn x) => CaravanUtility.IsOwner(x, Faction.OfPlayer)))
+            {
+                CaravanExitMapUtility.ExitMapAndCreateCaravan(tmpPawns, Faction.OfPlayer, mapParent.Tile, mapParent.Tile, -1);
+            }
+            tmpPawns.Clear();
+            mapParent.Destroy();
+        }
+
         public void AddAbandonedCamp(CaravanCamp Camp)
         {
             WorldObject worldObject = WorldObjectMaker.MakeWorldObject(SetUpCampDefOf.AbandonedCamp);
