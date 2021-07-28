@@ -8,7 +8,7 @@
     <worldObjectClass>Syrchalis_SetUpCamp.CaravanCamp</worldObjectClass>
     <texture>World/WorldObjects/Camp</texture>
     <expandingIcon>true</expandingIcon>
-    <expandingIconTexture>World/WorldObjects/Expanding/Camp</expandingIconTexture>
+    <expandingIconTexture>World/WorldObjects/Expanding/Bonfire</expandingIconTexture>
     <expandingIconPriority>8</expandingIconPriority>
     <isTempIncidentMapOwner>true</isTempIncidentMapOwner>
 	  <comps>
@@ -23,7 +23,7 @@
     <defName>AbandonedCamp</defName>
     <label>abandoned camp</label>
     <description>An abandoned camp.</description>
-    <texture>World/WorldObjects/Camp</texture>
+    <texture>World/WorldObjects/CampAbandoned</texture>
     <expandingIcon>true</expandingIcon>
     <expandingIconTexture>World/WorldObjects/Expanding/CampAbandoned</expandingIconTexture>
     <expandingIconPriority>8</expandingIconPriority>
