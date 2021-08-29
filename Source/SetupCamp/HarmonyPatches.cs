@@ -40,6 +40,17 @@ namespace Syrchalis_SetUpCamp
         }
     }
 
+    [HarmonyPatch(typeof(AnimalPenUtility), "NeedsToBeManagedByRope")]
+    class Patch
+    {
+        [HarmonyPrefix]
+        static bool Prefix(Pawn pawn, ref bool __result)
+        {
+            __result = AnimalPenUtility.IsRopeManagedAnimalDef(pawn.def) && pawn.Spawned;
+            return false;
+        }
+    }
+
     [HarmonyPatch(typeof(Caravan), nameof(Caravan.GetGizmos))]
     public static class GetGizmosPatch
     {

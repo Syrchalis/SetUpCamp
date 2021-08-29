@@ -6,6 +6,7 @@ using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
 using Verse;
+using System.Linq;
 
 namespace Syrchalis_SetUpCamp
 {
@@ -19,15 +20,6 @@ namespace Syrchalis_SetUpCamp
         {
             base.ExposeData();
             Scribe_Values.Look<bool>(ref this.startedCountdown, "startedCountdown", false, false);
-        }
-
-        public override void Tick()
-        {
-            base.Tick();
-            if (HasMap)
-            {
-                CheckStartForceExitAndRemoveMapCountdown();
-            }
         }
 
         public override bool ShouldRemoveMapNow(out bool alsoRemoveWorldObject)
@@ -64,7 +56,7 @@ namespace Syrchalis_SetUpCamp
                             "AcceptButton".Translate(), delegate ()
                             {
                                 Messages.Message("SetUpCampAbandoned".Translate(), MessageTypeDefOf.TaskCompletion);
-                                TimedForcedExit.ForceReform(this);
+                                ForceReform(this);
                                 if (SetUpCampSettings.timeout != SetUpCampSettings.timeoutmin) //this would mean the setting is off
                                 {
                                     AddAbandonedCamp(this);
@@ -75,31 +67,34 @@ namespace Syrchalis_SetUpCamp
                 };
             }
         }
-        
-        private void CheckStartForceExitAndRemoveMapCountdown()
+
+        private static void ForceReform(MapParent mapParent)
         {
-            if (SetUpCampSettings.mapTimerDays != SetUpCampSettings.mapTimerDaysmin)
+
+            if (Dialog_FormCaravan.AllSendablePawns(mapParent.Map, reform: true).Any((Pawn x) => x.IsColonist))
             {
-                if (startedCountdown)
+                Messages.Message("MessageYouHaveToReformCaravanNow".Translate(), new GlobalTargetInfo(mapParent.Tile), MessageTypeDefOf.NeutralEvent);
+                Current.Game.CurrentMap = mapParent.Map;
+                Dialog_FormCaravan window = new Dialog_FormCaravan(mapParent.Map, reform: true, delegate
                 {
-                    if (GenHostility.AnyHostileActiveThreatToPlayer(Map, false))
+                    if (mapParent.HasMap)
                     {
-                        startedCountdown = false;
-                        GetComponent<TimedForcedExit>().ResetForceExitAndRemoveMapCountdown();
+                        mapParent.Destroy();
                     }
-                }
-                else
-                {
-                    if (!GenHostility.AnyHostileActiveThreatToPlayer(Map))
-                    {
-                        startedCountdown = true;
-                        int ticksTillLeaving = Mathf.RoundToInt(SetUpCampSettings.mapTimerDays * 60000f);
-                        Messages.Message("MessageSiteCountdownBecauseNoEnemiesInitially".Translate(TimedForcedExit.GetForceExitAndRemoveMapCountdownTimeLeftString(ticksTillLeaving)), this, MessageTypeDefOf.PositiveEvent, true);
-                        GetComponent<TimedForcedExit>().StartForceExitAndRemoveMapCountdown(ticksTillLeaving);
-                    }
-                }
+                }, mapAboutToBeRemoved: true);
+                Find.WindowStack.Add(window);
+                return;
             }
+            List<Pawn> tmpPawns = new List<Pawn>();
+            tmpPawns.AddRange(mapParent.Map.mapPawns.AllPawns.Where((Pawn x) => x.Faction == Faction.OfPlayer || x.HostFaction == Faction.OfPlayer));
+            if (tmpPawns.Any((Pawn x) => CaravanUtility.IsOwner(x, Faction.OfPlayer)))
+            {
+                CaravanExitMapUtility.ExitMapAndCreateCaravan(tmpPawns, Faction.OfPlayer, mapParent.Tile, mapParent.Tile, -1);
+            }
+            tmpPawns.Clear();
+            mapParent.Destroy();
         }
+
         public void AddAbandonedCamp(CaravanCamp Camp)
         {
             WorldObject worldObject = WorldObjectMaker.MakeWorldObject(SetUpCampDefOf.AbandonedCamp);
@@ -109,14 +104,5 @@ namespace Syrchalis_SetUpCamp
             Find.WorldObjects.Add(worldObject);
         }
 
-        public void ChangeTimer(int delta)
-        {
-            if (startedCountdown)
-            {
-                TimedForcedExit forceExitComp = GetComponent<TimedForcedExit>();
-                int timeLeftTicks = (int)AccessTools.Field(typeof(TimedForcedExit), "ticksLeftToForceExitAndRemoveMap").GetValue(forceExitComp);
-                forceExitComp.StartForceExitAndRemoveMapCountdown(timeLeftTicks + delta);
-            }
-        }
     }
 }

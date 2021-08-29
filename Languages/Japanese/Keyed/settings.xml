@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
   <SetUpCamp>キャンプ設置</SetUpCamp>
@@ -12,10 +12,10 @@
   <SetUpCampSettingsTimeoutTooltip>放棄されたキャンプが消滅するまでの日数(15-120)</SetUpCampSettingsTimeoutTooltip>
   <SetUpCampSettingMinCampSize>最小マップサイズ</SetUpCampSettingMinCampSize>
   <SetUpCampSettingMaxCampSize>最大マップサイズ</SetUpCampSettingMaxCampSize>
-  <SetUpCampSettingsCustomMapGenDef>資源を有効にする</SetUpCampSettingsCustomMapGenDef>
+  <SetUpCampSettingsCustomMapGenDef>資源を有効にする（初期設定:オン)</SetUpCampSettingsCustomMapGenDef>
   <SetUpCampSettingsPermanentCamps>キャンプマップを残す（これを無効にすると、現在マップ上に存在する、入植者の居ないすべてのキャンプが完全に削除されます)</SetUpCampSettingsPermanentCamps>
-  <SetUpCampSettingsHomeEvents>通常のマップで起きるイベントを、キャンプマップでも有効にする</SetUpCampSettingsHomeEvents>
-  <SetUpCampSettingsCaravanEvents>キャラバン隊で発生するイベントを、キャンプマップでも有効にする</SetUpCampSettingsCaravanEvents>
+  <SetUpCampSettingsHomeEvents>通常のマップで起きるイベントを、キャンプマップでも有効にする（初期設定:オフ)</SetUpCampSettingsHomeEvents>
+  <SetUpCampSettingsCaravanEvents>キャラバン隊で発生するイベントを、キャンプマップでも有効にする（初期設定:オフ)</SetUpCampSettingsCaravanEvents>
   <SetUpCampDestroyCamp>キャンプ放棄</SetUpCampDestroyCamp>
   <SetUpCampDestroyCampDesc>このキャンプを永遠に放棄します。</SetUpCampDestroyCampDesc>
   <SetUpCampAbandonDialogue>あなたは本当に、このキャンプを永久に破壊しますか？(この結果は元に戻せません)</SetUpCampAbandonDialogue>
@@ -23,5 +23,6 @@
   <SetUpCampStillInUse>キャンプにはまだ入植者が残っています。あなたはキャンプを放棄する前にキャラバン隊を編成する必要があります。</SetUpCampStillInUse>
   <SetUpCampOccupied>同じ場所にキャンプを設定する場合、数日待つ必要があります。</SetUpCampOccupied>
 
+  <SetUpCamp_GeneratingCamp>キャンプ地点生成</SetUpCamp_GeneratingCamp>
 
 </LanguageData>
